@@ -4,7 +4,7 @@
 
 Link: https://www.kaggle.com/datasets/rkiattisak/sports-car-prices-dataset
 
-This dataset contains information about the prices of different sports cars from various manufacturers. Included is the make and model of the car, the year of production, the engine size, the horsepower, the torque, the 0-60 MPH time, and the price in USD.
+This dataset contains various aspects of information about certain sports cars from many manufacturers. Included is the make and model of the car, the year of production, the engine size, the horsepower, the torque, the 0-60 MPH time, and the price in USD.
 
 
 ## _The Purpose_
