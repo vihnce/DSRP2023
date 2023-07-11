@@ -47,7 +47,7 @@ We can use different comparison operators to filter:
 
 -   `>` is "greater than"
 
--   `is.na()` returns TRUE is value is NA
+-   `is.na()` returns TRUE if value is NA
 
 ```{r}
 ## return characters with a missing mass
