@@ -1,4 +1,4 @@
-carsdata <- read.csv("data/Sport car price.csv")
+carsdata <- read.csv("Sport car price.csv")
 str(carsdata)
 View(carsdata)
 library(ggplot2)
