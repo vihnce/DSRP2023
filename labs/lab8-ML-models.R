@@ -4,6 +4,7 @@ library(yardstick)
 library(dplyr)
 library(reshape2)
 library(ggplot2)
+library(Metrics)
 
 carsdata <- read.csv("Sport car price.csv")
 str(carsdata)
@@ -72,7 +73,7 @@ ggplot(carsAllNumeric, aes(x = X0.60.MPH.Time..seconds., y = Horsepower)) +
   geom_point() +
   theme_minimal()
 
-# will classify on Car Make & predict on Price (regression)
+# will predict on Price (regression)
 
 # set a seed for reproducability
 set.seed(71723)
@@ -84,14 +85,7 @@ reg_split <- initial_split(carsAllNumeric, prop = .75) # 75% of data for trainin
 reg_train <- training(reg_split)
 reg_test <- testing(reg_split)
 
-# Classification Dataset Splits
-class_split <- initial_split(carsdata_small, prop = .75)
-
-class_train <- training(class_split)
-class_test <- testing(class_split)
-class_test
-
-# Linear Regression
+# Linear regression
 lm_fit <- linear_reg() |>
   set_engine("lm") |>
   set_mode("regression") |>
@@ -101,20 +95,31 @@ lm_fit <- linear_reg() |>
 lm_fit$fit
 summary(lm_fit$fit)
 
-# 
+# calculate errors
 reg_results <- reg_test
 
 reg_results$lm_pred <- predict(lm_fit, reg_test)$.pred
 
-mae(reg_results, Sepal.Length, lm_pred)
+yardstick::mae(reg_results, Price..in.USD., lm_pred)
 
-rmse(reg_results, Sepal.Length, lm_pred)
+yardstick::rmse(reg_results, Price..in.USD., lm_pred)
 
+# Random Forest regression
+forest_reg_fit <- rand_forest() |>
+  set_engine("ranger") |>
+  set_mode("regression") |>
+  fit(Price..in.USD. ~ .,
+      data = reg_train)
 
+forest_reg_fit$fit
 
+# calculate errors
+reg_results$forest_pred <- predict(forest_reg_fit, reg_test)$.pred
 
+yardstick::mae(reg_results, Price..in.USD., forest_pred)
 
+yardstick::rmse(reg_results, Price..in.USD., forest_pred)
 
-
+# Random Forest model performed with less error than the Linear model
 
 
